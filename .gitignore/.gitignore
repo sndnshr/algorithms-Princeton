@@ -1,0 +1,9 @@
+# Test resources
+*.png
+*.txt
+
+# Class file
+*.class
+
+# JAR files
+*.jar
