@@ -1,0 +1,13 @@
+
+# excluded folders
+**/bin
+**/lib
+**/.settings
+**/percolation-resources
+**/queues
+**/collinear
+
+# Project files
+*.checkstyle
+*.project
+*.classpath
