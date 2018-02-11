@@ -6,6 +6,7 @@
 **/percolation-resources
 **/queues
 **/collinear
+**/8puzzle
 
 # Project files
 *.checkstyle

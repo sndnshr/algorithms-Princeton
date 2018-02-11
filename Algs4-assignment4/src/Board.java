@@ -9,16 +9,14 @@
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.princeton.cs.algs4.StdRandom;
-
 public class Board {
   private final int [][] cells;
   private final int n;  // Dimension of board
   private int emptyCellRow;
   private int emptyCellCol;
   
-  //construct a board from an n-by-n array of blocks
-  //(where blocks[i][j] = block in row i, column j)
+  // construct a board from an n-by-n array of blocks
+  // (where blocks[i][j] = block in row i, column j)
   public Board(int[][] blocks) {
     cells = deepCopyIntMatrix(blocks);
     n = blocks.length;
@@ -28,17 +26,18 @@ public class Board {
         if (blocks[row][col] == 0) {
           emptyCellRow = row;
           emptyCellCol = col;
+          return;
         }
       }
     }     
   }
   
-  //board dimension n
+  // board dimension n
   public int dimension() {
     return n;
   }
   
-  //number of blocks out of place
+  // number of blocks out of place
   public int hamming() {
     int result = 0;
     
@@ -54,7 +53,7 @@ public class Board {
     return result;
   }
   
-  //sum of Manhattan distances between blocks and goal
+  // sum of Manhattan distances between blocks and goal
   public int manhattan() {
     int result = 0;
     
@@ -70,38 +69,31 @@ public class Board {
     return result;
   }
   
-  //is this board the goal board?
+  // is this board the goal board?
   public boolean isGoal() {
     return hamming() == 0;
   }
   
-  //a board that is obtained by exchanging any pair of blocks
+  // a board that is obtained by exchanging any pair of blocks
   public Board twin() {
     int[][] clone = deepCopyIntMatrix(cells);
     
-    int row1 = StdRandom.uniform(n-1);
-    int col1 = StdRandom.uniform(n-1);
-    int row2 = StdRandom.uniform(n-1);
-    int col2 = StdRandom.uniform(n-1);
-    
-    do {
-      row1 = StdRandom.uniform(n-1);
-    } while (row1 == emptyCellRow);
-      
-    do {
-      row2 = StdRandom.uniform(n-1);
-    } while (row1 == row2 && col1 == col2 || row2 == emptyCellRow);
-    
-    swap(clone, row1, col1, row2, col2);
+    if (emptyCellRow != 0) {
+      swap(clone, 0, 0, 0, 1);
+    } else {
+        swap(clone, 1, 0, 1, 1);
+    }
     
     return new Board(clone);
   }
   
-  //does this board equal y?
+  // does this board equal y?
   public boolean equals(Object y) {
     if (y == this)
       return true;
     if (y == null)
+      return false;
+    if (this.getClass() != y.getClass())
       return false;
     Board that = (Board) y;
     
@@ -114,14 +106,14 @@ public class Board {
     
     for (int row = 0; row < n; row++) {
       for (int col = 0; col < n; col++) {
-        if (cells[row][col] != that.cells[row][col])
+        if (this.cells[row][col] != that.cells[row][col])
           return false;
       }
     }
     return true;
   }
   
-  //all neighboring boards
+  // all neighboring boards
   public Iterable<Board> neighbors() {
     List<Board> neighbors = new LinkedList<>();
     
@@ -148,12 +140,20 @@ public class Board {
       swap(right, emptyCellRow, emptyCellCol, emptyCellRow, emptyCellCol+1);
       neighbors.add(new Board(right));
     }
-    return null;
+    return neighbors;
   }
   
-  //string representation of this board (in the output format specified below)
+  // string representation of this board (in the output format specified below)
   public String toString() {
-    return null;
+    StringBuilder s = new StringBuilder();
+    s.append(n + "\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            s.append(String.format("%2d ", cells[i][j]));
+        }
+        s.append("\n");
+    }
+    return s.toString();
   }
   
   private int[][] deepCopyIntMatrix(int [][]input) {
@@ -168,21 +168,17 @@ public class Board {
   }
   
   private int dist(int row, int col) {
-    int val = cells[row][col];
+    int val = cells[row][col] - 1;
     int finalRow = val / n;
-    int finalCol = val % n - 1;
+    int finalCol = val % n;
     return Math.abs(row - finalRow) + Math.abs(col - finalCol);
   }
   
-  //swap two cells of int matrix
+  // swap two cells of int matrix
   private void swap(int[][] input, int row1, int col1, int row2, int col2) {
     int temp = input[row1][col1];
     input[row1][col1] = input[row2][col2];
     input[row2][col2] = temp;
   }
 
-  //unit tests (not graded)
-  public static void main(String[] args) {
-    
-  }
 }
