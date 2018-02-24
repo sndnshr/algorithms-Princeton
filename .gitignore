@@ -7,8 +7,15 @@
 **/queues
 **/collinear
 **/8puzzle
+**/kdtree
 
 # Project files
 *.checkstyle
 *.project
 *.classpath
+
+# Excluded files
+KdTreeGenerator.java
+KdTreeVisualizer.java
+NearestNeighborVisualizer.java
+RangeSearchVisualizer.java
