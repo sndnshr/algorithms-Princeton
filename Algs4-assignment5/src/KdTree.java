@@ -27,11 +27,11 @@ public class KdTree {
   }
   
   private static class Node {
-    private Point2D p;
-    private RectHV rect;
+    private final Point2D p;
+    private final RectHV rect;
     private Node lb;
     private Node rt; 
-    private boolean type;
+    private final boolean type;
     
     public Node(Point2D p, RectHV rect, boolean type) {
       this.p = p;
@@ -107,7 +107,7 @@ public class KdTree {
     checkNull(p);
     
     Node curr = root;
-    do {
+    while (curr != null) {
       if (curr.p.equals(p)) 
         return true;
       
@@ -115,12 +115,11 @@ public class KdTree {
         curr = curr.lb;
       else
         curr = curr.rt;
-    } while (curr != null);
-    
+    }
     return false;
   }
   
-  //draw all points to standard draw
+  // draw all points to standard draw
   public void draw() {
     StdDraw.setPenColor(StdDraw.BLACK);
     StdDraw.line(0, 0, 1, 0);
@@ -194,9 +193,9 @@ public class KdTree {
       return closest;
     }
     
-    double closestDist = query.distanceTo(closest);
-    if (node.rect.distanceTo(query) < closestDist) {
-      if (node.p.distanceTo(query) < closestDist) {
+    double closestDist = query.distanceSquaredTo(closest);
+    if (node.rect.distanceSquaredTo(query) < closestDist) {
+      if (node.p.distanceSquaredTo(query) < closestDist) {
         closest = node.p;
       }
       
@@ -213,11 +212,11 @@ public class KdTree {
   }
 
   private void checkNull(Object object) {
-    if (object.equals(null))
-      throw new NullPointerException();
+    if (object == null)
+      throw new IllegalArgumentException();
   }
   
+  // Unit testing of the methods (optional)
   public static void main(String[] args) {
-    
   }
 }

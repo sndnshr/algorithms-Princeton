@@ -16,19 +16,19 @@ import edu.princeton.cs.algs4.RectHV;
 
 public class PointSET {
   
-  private TreeSet<Point2D> points;
+  private final TreeSet<Point2D> points;
   
-  //construct an empty set of points
+  // construct an empty set of points
   public PointSET() {
      points = new TreeSet<>();
   }
   
-  //is the set empty?
+  // is the set empty?
   public boolean isEmpty() {
      return points.isEmpty();
   }
   
-  //number of points in the set
+  // number of points in the set
   public int size() {
      return points.size();
   }
@@ -83,11 +83,12 @@ public class PointSET {
   }
   
   private void checkNull(Object object) {
-    if (object.equals(null))
-      throw new NullPointerException();
+    if (object == null)
+      throw new IllegalArgumentException();
+  }
+  
+  // Unit testing of the methods (optional)
+  public static void main(String[] args) {
   }
 
-  public static void main(String[] args) {
-    
-  }
 }
